@@ -9,6 +9,21 @@ ssh-keygen -t rsa
 cd  .ssh/
 cat  id_rsa.pub
 
+Client Servers
+useradd -md /home/ansadmin ansadmin
+passwd ansadmin
+su - ansadmin
+mkdir .ssh;
+touch .ssh/authorized_keys
+chmod 700 .ssh; chown -R ansadmin:ansadmin .ssh/
+cd .ssh
+vi authorized_keys 
+<copy the public key of ansible servers>
+:wq!
+
+chmod 600 authorized_keys
+
+
 ssh <privateip> -C  " yum repolist"
 
 ssh <privateip> -C  " sudo yum install -y screen "
@@ -31,19 +46,7 @@ ansible group1 -m shell -a " yum install -y httpd"    -b
 
 
 
-client servers
-useradd -md /home/ansadmin ansadmin
-passwd ansadmin
-su - ansadmin
-mkdir .ssh;
-touch .ssh/authorized_keys
-chmod 700 .ssh; chown -R ansadmin:ansadmin .ssh/
-cd .ssh
-vi authorized_keys 
-<copy the public key of ansible servers>
-:wq!
 
-chmod 600 authorized_keys
 
 
 ansadmin@ansibleserver> ssh <publicipclient>
